@@ -8,9 +8,8 @@ import (
 
 // Vector represents a single dense vector with optional metadata.
 type Vector struct {
-	ID       string    `json:"id"`
-	Values   []float64 `json:"values"`
-	Values32 []float32
+	ID       string         `json:"id"`
+	Values   []float64      `json:"values"`
 	Metadata map[string]any `json:"metadata,omitempty"`
 }
 
