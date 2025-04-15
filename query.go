@@ -27,6 +27,9 @@ type QueryByVectorRequest struct {
 type QueryByVectorResponse struct {
 	Matches   []MatchResult `json:"matches"`
 	Namespace string        `json:"namespace"`
+	Usage     struct {
+		ReadUnits uint32 `json:"readUnits"`
+	} `json:"usage"`
 }
 
 // QueryByVectors performs a similarity search using a dense vector.
