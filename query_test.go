@@ -37,7 +37,7 @@ func TestQueryByVectors(t *testing.T) {
 			IndexURL: "https://example-index.svc.us-east1-gcp.io",
 			APIKey:   "test-key",
 			HTTPClient: &http.Client{
-				Transport: roundTripFunc(func(req *http.Request) *http.Response {
+				Transport: roundTripFunc(func(_ *http.Request) *http.Response {
 					return &http.Response{
 						StatusCode: 200,
 						Body:       io.NopCloser(bytes.NewReader(data)),
@@ -47,10 +47,18 @@ func TestQueryByVectors(t *testing.T) {
 			},
 		}
 
+		filter := map[string]any{
+			"genre": map[string]any{
+				"$eq": "documentary",
+			},
+			"year": 2019,
+		}
+
 		req := &QueryByVectorRequest{
 			Vector:          []float64{0.1, 0.2, 0.3},
 			TopK:            1,
 			Namespace:       "test-namespace",
+			Filter:          filter,
 			IncludeMetadata: true,
 			IncludeValues:   false,
 		}
