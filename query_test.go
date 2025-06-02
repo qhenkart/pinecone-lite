@@ -37,7 +37,7 @@ func TestQueryByVectors(t *testing.T) {
 			IndexURL: "https://example-index.svc.us-east1-gcp.io",
 			APIKey:   "test-key",
 			HTTPClient: &http.Client{
-				Transport: roundTripFunc(func(_ *http.Request) *http.Response {
+				Transport: roundTripFunc(func(req *http.Request) *http.Response {
 					return &http.Response{
 						StatusCode: 200,
 						Body:       io.NopCloser(bytes.NewReader(data)),
