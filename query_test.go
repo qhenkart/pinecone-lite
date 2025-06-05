@@ -47,10 +47,18 @@ func TestQueryByVectors(t *testing.T) {
 			},
 		}
 
+		filter := map[string]any{
+			"genre": map[string]any{
+				"$eq": "documentary",
+			},
+			"year": 2019,
+		}
+
 		req := &QueryByVectorRequest{
 			Vector:          []float64{0.1, 0.2, 0.3},
 			TopK:            1,
 			Namespace:       "test-namespace",
+			Filter:          filter,
 			IncludeMetadata: true,
 			IncludeValues:   false,
 		}

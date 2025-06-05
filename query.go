@@ -19,6 +19,7 @@ type QueryByVectorRequest struct {
 	Vector          []float64
 	TopK            int
 	Namespace       string
+	Filter          map[string]any
 	IncludeValues   bool
 	IncludeMetadata bool
 }
@@ -43,6 +44,10 @@ func (c *Client) QueryByVectors(ctx context.Context, req *QueryByVectorRequest) 
 		"namespace":       req.Namespace,
 		"includeValues":   req.IncludeValues,
 		"includeMetadata": req.IncludeMetadata,
+	}
+
+	if req.Filter != nil {
+		body["filter"] = req.Filter
 	}
 
 	resp, err := c.do(ctx, http.MethodPost, "/query", body)
