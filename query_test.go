@@ -63,7 +63,7 @@ func TestQueryByVectors(t *testing.T) {
 			IncludeValues:   false,
 		}
 
-		resp, err := client.QueryByVectors(context.Background(), req)
+		resp, err := client.QueryByVector(context.Background(), req)
 		if err != nil {
 			t.Fatalf("expected no error, got %v", err)
 		}

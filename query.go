@@ -36,8 +36,8 @@ type ReadUsage struct {
 	ReadUnits uint32 `json:"readUnits"`
 }
 
-// QueryByVectors performs a similarity search using a dense vector.
-func (c *Client) QueryByVectors(ctx context.Context, req *QueryByVectorRequest) (*QueryByVectorResponse, error) {
+// QueryByVector performs a similarity search using a dense vector.
+func (c *Client) QueryByVector(ctx context.Context, req *QueryByVectorRequest) (*QueryByVectorResponse, error) {
 	body := map[string]any{
 		"vector":          req.Vector,
 		"topK":            req.TopK,
