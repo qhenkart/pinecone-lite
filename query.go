@@ -75,7 +75,7 @@ func (c *Client) QueryByVector(ctx context.Context, req *QueryByVectorRequest) (
 //
 //	namespace - namespace string to list IDs from
 //	prefix - optional string to filter IDs by prefix (pass "" for no filter)
-//	limit - max IDs per page (default 100, max 1000)
+//	limit - max IDs per page (default 100)
 //	paginationToken - token for next page (pass "" for first page)
 //
 // Returns:
