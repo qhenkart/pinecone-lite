@@ -77,3 +77,48 @@ func TestQueryByVectors(t *testing.T) {
 		}
 	})
 }
+
+func TestListVectors(t *testing.T) {
+	t.Run("valid_list_response", func(t *testing.T) {
+		// Mock response matches Pinecone's API format
+		mockResponse := map[string]any{
+			"vectors": []map[string]string{
+				{"id": "vec1"},
+				{"id": "vec2"},
+			},
+			"pagination": map[string]string{
+				"next": "next-token",
+			},
+		}
+
+		data, _ := json.Marshal(mockResponse)
+
+		client := &Client{
+			IndexURL: "https://example-index.svc.us-east1-gcp.io",
+			APIKey:   "test-key",
+			HTTPClient: &http.Client{
+				Transport: roundTripFunc(func(req *http.Request) *http.Response {
+					return &http.Response{
+						StatusCode: 200,
+						Body:       io.NopCloser(bytes.NewReader(data)),
+						Header:     make(http.Header),
+					}
+				}),
+			},
+		}
+
+		ids, nextToken, err := client.ListVectors(context.Background(), "production", "", 100, "")
+		if err != nil {
+			t.Fatalf("expected no error, got %v", err)
+		}
+		if len(ids) != 2 {
+			t.Fatalf("expected 2 ids, got %d", len(ids))
+		}
+		if ids[0] != "vec1" || ids[1] != "vec2" {
+			t.Errorf("unexpected ids: %+v", ids)
+		}
+		if nextToken != "next-token" {
+			t.Errorf("expected nextToken 'next-token', got %s", nextToken)
+		}
+	})
+}
