@@ -40,3 +40,33 @@ func (c *Client) DeleteAllRecordsInNamespace(ctx context.Context, namespace stri
 	}
 	return nil
 }
+
+// DeleteVectorsByMetadata deletes all vectors in the specified namespace that match the provided metadata filter.
+//
+// The filter parameter must use Pinecone's filter expression syntax. If no comparison operator is specified for a field, $eq is assumed.
+// See: https://docs.pinecone.io/guides/index-data/indexing-overview#metadata-filter-expressions
+//
+// Example:
+//
+//	filter := map[string]any{"genre": "documentary"}  // defaults to $eq
+//	err := client.DeleteVectorsByMetadata(ctx, "example-namespace", filter)
+//	if err != nil {
+//	    // handle error
+//	}
+func (c *Client) DeleteVectorsByMetadata(ctx context.Context, namespace string, filter map[string]any) error {
+	body := map[string]any{
+		"namespace": namespace,
+		"filter":    filter,
+	}
+
+	resp, err := c.do(ctx, http.MethodPost, "/vectors/delete", body)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode >= 300 {
+		return parseAPIError(resp)
+	}
+	return nil
+}
