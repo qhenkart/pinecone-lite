@@ -1,7 +1,10 @@
 package pinecone
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -115,6 +118,50 @@ func TestDeleteAllRecordsInNamespace(t *testing.T) {
 		err := client.DeleteAllRecordsInNamespace(context.Background(), "test-namespace")
 		if err == nil || !strings.Contains(err.Error(), "bad request") {
 			t.Fatalf("expected API error, got: %v", err)
+		}
+	})
+}
+
+func TestDeleteVectorsByMetadata(t *testing.T) {
+	t.Run("valid_delete_by_metadata", func(t *testing.T) {
+		// Expectation: The endpoint returns 200 OK for a successful delete request.
+		client := &Client{
+			IndexURL: "https://example-index.svc.us-east1-gcp.io",
+			APIKey:   "test-key",
+			HTTPClient: &http.Client{
+				Transport: roundTripFunc(func(req *http.Request) *http.Response {
+					// Validate method and endpoint
+					if req.Method != http.MethodPost {
+						t.Errorf("expected POST, got %s", req.Method)
+					}
+					if req.URL.Path != "/vectors/delete" {
+						t.Errorf("expected /vectors/delete, got %s", req.URL.Path)
+					}
+					// Validate body
+					body, _ := io.ReadAll(req.Body)
+					var reqData map[string]any
+					json.Unmarshal(body, &reqData)
+					if reqData["namespace"] != "example-namespace" {
+						t.Errorf("expected namespace 'example-namespace', got %v", reqData["namespace"])
+					}
+					filter, ok := reqData["filter"].(map[string]any)
+					if !ok || filter["genre"] != "documentary" {
+						t.Errorf("expected filter genre=documentary, got %v", reqData["filter"])
+					}
+
+					return &http.Response{
+						StatusCode: 200,
+						Body:       io.NopCloser(bytes.NewReader([]byte(`{}`))),
+						Header:     make(http.Header),
+					}
+				}),
+			},
+		}
+
+		filter := map[string]any{"genre": "documentary"}
+		err := client.DeleteVectorsByMetadata(context.Background(), "example-namespace", filter)
+		if err != nil {
+			t.Fatalf("expected no error, got %v", err)
 		}
 	})
 }
