@@ -69,7 +69,7 @@ func (c *Client) QueryByVector(ctx context.Context, req *QueryByVectorRequest) (
 	return &parsed, nil
 }
 
-// ListVectors retrieves vector IDs from a namespace, with optional prefix, limit, and pagination.
+// ListVectorIDs retrieves vector IDs from a namespace, with optional prefix, limit, and pagination.
 //
 // Parameters:
 //
@@ -96,7 +96,7 @@ func (c *Client) QueryByVector(ctx context.Context, req *QueryByVectorRequest) (
 //
 //	// If nextToken is not empty, retrieve the next page:
 //	// moreIDs, _, err := client.ListVectors(ctx, "production", "", 100, nextToken)
-func (c *Client) ListVectors(ctx context.Context, namespace, prefix string, limit int, paginationToken string) ([]string, string, error) {
+func (c *Client) ListVectorIDs(ctx context.Context, namespace, prefix string, limit int, paginationToken string) ([]string, string, error) {
 	params := map[string]string{
 		"namespace": namespace,
 	}

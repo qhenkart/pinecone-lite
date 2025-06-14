@@ -107,7 +107,7 @@ func TestListVectors(t *testing.T) {
 			},
 		}
 
-		ids, nextToken, err := client.ListVectors(context.Background(), "production", "", 100, "")
+		ids, nextToken, err := client.ListVectorIDs(context.Background(), "production", "", 100, "")
 		if err != nil {
 			t.Fatalf("expected no error, got %v", err)
 		}
