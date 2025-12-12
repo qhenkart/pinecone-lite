@@ -49,7 +49,7 @@ func (c *Client) do(ctx context.Context, method, path string, body any) (*http.R
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Api-Key", c.APIKey)
-	req.Header.Set("X-Pinecone-API-Version", "2025-04")
+	req.Header.Set("X-Pinecone-API-Version", "2025-10")
 
 	return c.HTTPClient.Do(req)
 }
