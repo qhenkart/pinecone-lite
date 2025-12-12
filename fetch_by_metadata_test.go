@@ -31,14 +31,14 @@ func TestFetchByMetadata(t *testing.T) {
 				Vectors: map[string]FetchedVector{
 					"id-1": {
 						ID:     "id-1",
-						Values: []float32{0.1, 0.2},
+						Values: []float64{0.1, 0.2},
 						Metadata: map[string]any{
 							"rating": 4,
 						},
 					},
 					"id-2": {
 						ID:     "id-2",
-						Values: []float32{0.3, 0.4},
+						Values: []float64{0.3, 0.4},
 						Metadata: map[string]any{
 							"rating": 1,
 						},
@@ -132,4 +132,3 @@ func TestFetchByMetadata(t *testing.T) {
 		}
 	})
 }
-

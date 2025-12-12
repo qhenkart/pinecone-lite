@@ -18,7 +18,7 @@ type FetchByMetadataRequest struct {
 // FetchedVector represents a vector returned by fetch_by_metadata.
 type FetchedVector struct {
 	ID       string         `json:"id"`
-	Values   []float32      `json:"values,omitempty"`
+	Values   []float64      `json:"values,omitempty"`
 	Metadata map[string]any `json:"metadata,omitempty"`
 }
 
@@ -54,6 +54,3 @@ func (c *Client) FetchByMetadata(ctx context.Context, req *FetchByMetadataReques
 
 	return &parsed, nil
 }
-
-
-
