@@ -19,7 +19,7 @@
 ## 🔧 Installation
 
 ```bash
-go get github.com/yourusername/pinecone-lite
+go get github.com/qhenkart/pinecone-lite
 ```
 
 ---
