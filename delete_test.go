@@ -80,7 +80,7 @@ func TestDeleteAllRecordsInNamespace(t *testing.T) {
 			if r.Header.Get("Api-Key") != "test-key" {
 				t.Fatalf("missing or incorrect Api-Key header")
 			}
-			if r.Header.Get("X-Pinecone-API-Version") != "2025-04" {
+			if r.Header.Get("X-Pinecone-API-Version") != "2025-10" {
 				t.Fatalf("missing or incorrect API version header")
 			}
 			w.WriteHeader(http.StatusNoContent)

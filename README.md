@@ -8,6 +8,7 @@
 
 - Upsert vectors to an index
 - Query vectors by similarity
+- Fetch vectors by metadata filters
 - Delete vectors by ID or entire namespace
 - Handles API error responses cleanly
 - Zero external dependencies
@@ -60,6 +61,18 @@ resp, err := client.QueryByVectors(ctx, &pinecone.QueryByVectorRequest{
 
 ```go
 err := client.DeleteVectorsByID(ctx, []string{"vec1"}, "my-namespace")
+```
+
+### Fetch by Metadata
+
+```go
+resp, err := client.FetchByMetadata(ctx, &pinecone.FetchByMetadataRequest{
+  Namespace: "my-namespace",
+  Filter: map[string]any{
+    "rating": map[string]any{"$lt": 5},
+  },
+  Limit: 10,
+})
 ```
 
 ---

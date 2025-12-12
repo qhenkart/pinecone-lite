@@ -57,7 +57,7 @@ func TestClientDo(t *testing.T) {
 		if gotReq.Header.Get("Api-Key") != "abc123" {
 			t.Errorf("missing Api-Key header")
 		}
-		if gotReq.Header.Get("X-Pinecone-API-Version") != "2025-04" {
+		if gotReq.Header.Get("X-Pinecone-API-Version") != "2025-10" {
 			t.Errorf("missing version header")
 		}
 	})
