@@ -19,7 +19,7 @@
 ## 🔧 Installation
 
 ```bash
-go get github.com/yourusername/pinecone-lite
+go get github.com/qhenkart/pinecone-lite
 ```
 
 ---
@@ -79,7 +79,7 @@ resp, err := client.FetchByMetadata(ctx, &pinecone.FetchByMetadataRequest{
 
 ## 📘 API Reference
 
-See [GoDoc](https://pkg.go.dev/github.com/yourusername/pinecone-lite) for full reference.
+See [GoDoc](https://pkg.go.dev/github.com/qhenkart/pinecone-lite) for full reference.
 
 ---
 
